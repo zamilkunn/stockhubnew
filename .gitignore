@@ -1,6 +1,9 @@
 # Environment
 .env
 
+# Nested repo
+stockhubnew/
+
 # OS files
 .DS_Store
 Thumbs.db

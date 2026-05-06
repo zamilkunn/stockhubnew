@@ -8,10 +8,19 @@ $db_user = getenv('DB_USER') ?: 'root';
 $db_pass = getenv('DB_PASS') ?: '';
 $db_name = getenv('DB_NAME') ?: 'stockbarang';
 $db_port = getenv('DB_PORT') ?: 3306;
+$db_ssl  = getenv('DB_SSL') ?: 'false';
 
-$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name, (int)$db_port);
+$conn = mysqli_init();
 
-if (!$conn) {
+// Aiven MySQL memerlukan SSL
+if ($db_ssl === 'true') {
+    mysqli_ssl_set($conn, NULL, NULL, NULL, NULL, NULL);
+    mysqli_real_connect($conn, $db_host, $db_user, $db_pass, $db_name, (int)$db_port, NULL, MYSQLI_CLIENT_SSL);
+} else {
+    mysqli_real_connect($conn, $db_host, $db_user, $db_pass, $db_name, (int)$db_port);
+}
+
+if (!$conn || mysqli_connect_errno()) {
     die("Koneksi database gagal: " . mysqli_connect_error());
 }
 
