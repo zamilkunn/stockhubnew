@@ -1,0 +1,20 @@
+# Render Blueprint - Auto Deploy Configuration
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: stockhub
+    runtime: docker
+    dockerfilePath: ./dockerfile
+    plan: free
+    envVars:
+      - key: DB_HOST
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASS
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_PORT
+        sync: false
